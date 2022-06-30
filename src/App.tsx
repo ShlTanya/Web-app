@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { ButtonExample, List } from './components/examples';
+import { Title, ButtonMenuHamburger, Link } from './components';
 
 function App() {
   const onClick = () => {
@@ -20,6 +21,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <Link text="Learn React My" url="https://reactjs.org" />
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -27,6 +29,8 @@ function App() {
           rel="noopener noreferrer">
           Learn React
         </a>
+        <Title text="Sign In" />
+        <ButtonMenuHamburger isOpen={true} />
         <ButtonExample text="Button example" onClick={onClick} />
         <List list={users} />
       </header>
