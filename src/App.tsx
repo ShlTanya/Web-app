@@ -5,8 +5,11 @@ import { ButtonExample, List } from './components/examples';
 import { Title, ButtonMenuHamburger, Link } from './components';
 
 function App() {
+  let isMyOpen = true;
+
   const onClick = () => {
-    console.log('click');
+    isMyOpen = !isMyOpen;
+    console.log(isMyOpen);
   };
 
   const users = [
@@ -30,7 +33,7 @@ function App() {
           Learn React
         </a>
         <Title text="Sign In" />
-        <ButtonMenuHamburger isOpen={true} />
+        <ButtonMenuHamburger isOpen={isMyOpen} onClick={onClick} />
         <ButtonExample text="Button example" onClick={onClick} />
         <List list={users} />
       </header>

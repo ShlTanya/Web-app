@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import { ColorService } from '../../services/ColorService';
+import { getFontFamily } from '../../services';
+
 interface ILink {
   text: string;
   url: string;
@@ -12,20 +15,14 @@ export const Link = ({ text, url }: ILink) => (
 );
 
 const LinkSt = styled.a`
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
+  font-family: ${getFontFamily()};
   font-size: 18px;
   line-height: 24px;
 
-  color: #313037
+  color: ${ColorService.SECONDARY}}
 
   :hover {
-    color: #2231AA;
-  }
-
-  :disabled {
-    color: #8D8E97
+    color: ${ColorService.PRIMARY}};
   }
 }
 `;

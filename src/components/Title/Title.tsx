@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-//import { ColorService } from '../../services/ColorService';
+
+import { ColorService } from '../../services/ColorService';
+import { getFontFamily } from '../../services';
 
 interface ITitle {
   text: string;
@@ -8,13 +10,10 @@ interface ITitle {
 export const Title = ({ text }: ITitle) => <TitleStyled>{text}</TitleStyled>;
 
 const TitleStyled = styled.div`
-  color: #313037;
+  color: ${ColorService.SECONDARY}};
 
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
+  font-family: ${getFontFamily('bold')};
   font-size: 56px;
-
   display: flex;
   align-items: center;
 `;
