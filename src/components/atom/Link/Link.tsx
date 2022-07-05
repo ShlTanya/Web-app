@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { ColorService } from '../../services/ColorService';
-import { getFontFamily } from '../../services';
+import { ColorService } from '../../../services/ColorService';
+import { getFontFamily } from '../../../services';
 
 interface ILink {
   text: string;

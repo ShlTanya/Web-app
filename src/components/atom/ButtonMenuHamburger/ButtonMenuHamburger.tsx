@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ColorService } from '../../services/ColorService';
+import { ColorService } from '../../../services/ColorService';
 
 interface IBtnMenuHamburger {
   isOpen: boolean;
