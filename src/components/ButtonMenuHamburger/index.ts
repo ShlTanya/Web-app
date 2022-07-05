@@ -1,1 +1,0 @@
-export { ButtonMenuHamburger } from './ButtonMenuHamburger';
