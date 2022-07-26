@@ -22,7 +22,6 @@ const BtnMHSt = styled.div`
   height: 84px;
 
   background: ${ColorService.PRIMARY}};
-  border: 1px solid ${ColorService.PRIMARY2}};
 
   :hover {
     cursor: pointer;

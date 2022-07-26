@@ -4,13 +4,6 @@ import styled from 'styled-components';
 import { ColorService } from '../../../services/ColorService';
 import { getFontFamily } from '../../../services';
 
-export enum BtnTheme {
-  Primary,
-  Secondary,
-  Secondary2,
-  WithIcon,
-}
-
 interface IBtnStyle {
   defBackground: string;
   defBorderColor: string;
@@ -23,21 +16,9 @@ interface IBtnStyle {
   disFontColor: string;
 }
 
-const getBtnStyle = (btnTheme: BtnTheme): IBtnStyle => {
+const getBtnStyle = (btnTheme: string): IBtnStyle => {
   switch (btnTheme) {
-    case BtnTheme.Primary:
-      return {
-        defBackground: ColorService.PRIMARY,
-        defBorderColor: ColorService.PRIMARY,
-        defFontColor: ColorService.WHITE,
-        hovBackground: ColorService.PRIMARY2,
-        hovBorderColor: ColorService.PRIMARY2,
-        hovFontColor: ColorService.WHITE,
-        disBackground: ColorService.LIGHT,
-        disBorderColor: ColorService.LIGHT,
-        disFontColor: ColorService.GRAY,
-      };
-    case BtnTheme.Secondary:
+    case 'secondary':
       return {
         defBackground: ColorService.LIGHT,
         defBorderColor: ColorService.LIGHT,
@@ -49,7 +30,7 @@ const getBtnStyle = (btnTheme: BtnTheme): IBtnStyle => {
         disBorderColor: ColorService.LIGHT,
         disFontColor: ColorService.GRAY,
       };
-    case BtnTheme.Secondary2:
+    case 'secondary2':
       return {
         defBackground: ColorService.TRANSPARENT,
         defBorderColor: ColorService.TRANSPARENT,
@@ -61,7 +42,7 @@ const getBtnStyle = (btnTheme: BtnTheme): IBtnStyle => {
         disBorderColor: ColorService.TRANSPARENT,
         disFontColor: ColorService.GRAY,
       };
-    case BtnTheme.WithIcon:
+    case 'withIcon':
       return {
         defBackground: ColorService.LIGHT,
         defBorderColor: ColorService.LIGHT,
@@ -73,11 +54,23 @@ const getBtnStyle = (btnTheme: BtnTheme): IBtnStyle => {
         disBorderColor: ColorService.LIGHT,
         disFontColor: ColorService.GRAY,
       };
+    default:
+      return {
+        defBackground: ColorService.PRIMARY,
+        defBorderColor: ColorService.PRIMARY,
+        defFontColor: ColorService.WHITE,
+        hovBackground: ColorService.PRIMARY2,
+        hovBorderColor: ColorService.PRIMARY2,
+        hovFontColor: ColorService.WHITE,
+        disBackground: ColorService.LIGHT,
+        disBorderColor: ColorService.LIGHT,
+        disFontColor: ColorService.GRAY,
+      };
   }
 };
 
 interface IBtn {
-  btnTheme: BtnTheme;
+  btnTheme: 'primary' | 'secondary' | 'secondary2' | 'withIcon';
   text: string;
   icon?: ReactNode;
   disabled?: boolean;

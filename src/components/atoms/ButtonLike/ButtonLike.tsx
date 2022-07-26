@@ -19,7 +19,7 @@ const getBtnStyle = (isLike: boolean): IBtnStyle => {
     return {
       defBackground: ColorService.LIGHT,
       defFontColor: ColorService.BLACK,
-      hovBackground: ColorService.ERROR,
+      hovBackground: ColorService.PRIMARY2,
       hovFontColor: ColorService.WHITE,
       disBackground: ColorService.LIGHT,
       disFontColor: ColorService.GRAY,
@@ -28,7 +28,7 @@ const getBtnStyle = (isLike: boolean): IBtnStyle => {
     return {
       defBackground: ColorService.LIGHT,
       defFontColor: ColorService.BLACK,
-      hovBackground: ColorService.PRIMARY2,
+      hovBackground: ColorService.ERROR,
       hovFontColor: ColorService.WHITE,
       disBackground: ColorService.LIGHT,
       disFontColor: ColorService.GRAY,
@@ -61,7 +61,7 @@ export const ButtonLike = ({ isLike, disabled, onClick }: IBtnLike) => {
 
 const BtnSt = styled.button<IBtnStyle>`
   border-radius: 2px;
-  width: 88px;
+  width: 56px;
   height: 56px;
   display: flex;
   align-items: center;
