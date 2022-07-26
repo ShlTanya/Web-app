@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ColorService } from '../../services/ColorService';
+import { ColorService } from '../../../services/ColorService';
 
 interface IBtnMenuHamburger {
   isOpen: boolean;
@@ -22,7 +22,6 @@ const BtnMHSt = styled.div`
   height: 84px;
 
   background: ${ColorService.PRIMARY}};
-  border: 1px solid ${ColorService.PRIMARY2}};
 
   :hover {
     cursor: pointer;
