@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Title } from '../../atoms/Title';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
@@ -8,42 +9,52 @@ import { getFontFamily } from '../../../services';
 
 import styled from 'styled-components';
 import { CardFooter } from '../../molecules/CardFooter';
-import { IPost } from '../../../types/Posts';
+import {
+  getIsShowModalImage,
+  getPostAsync,
+  setIsShowModalImage,
+  showPost,
+} from '../../../core/slices/PostSlice';
+import { ModalTemplate } from '../../templates/ModalTemplate/ModalTemplate';
 
 export const PostPage = () => {
-  const [post, setPost] = useState<IPost>();
-
   const params = useParams();
 
+  const postStore = useSelector(showPost);
+  const isShowModalImage = useSelector(getIsShowModalImage);
+  const dispatch = useDispatch();
+
+  const onSelectImage = () => {
+    dispatch(setIsShowModalImage(true));
+  };
+
   useEffect(() => {
-    const id = params?.postID;
-    if (id) {
-      fetch(`https://studapi.teachmeskills.by/blog/posts/${id}`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          setPost(data);
-        });
+    const postid = params?.postID;
+    if (postid) {
+      dispatch(getPostAsync({ postid }) as any);
     }
-  }, [params?.postID]);
+  }, [dispatch, params?.postID]);
 
   return (
     <FormTemplate>
       <HomeSt>
         <Link to={'/'}>Home</Link>
         <PSt>|</PSt>
-        <p>Post {post?.id}</p>
+        <p>Post {postStore?.id}</p>
       </HomeSt>
-      <Title text={post?.title} />
+      <Title text={postStore?.title} />
       <PostSt>
         <DivImgSt>
-          <ImgSt src={post?.image} />
+          <ImgSt src={postStore?.image} onClick={() => onSelectImage()} />
         </DivImgSt>
-        <TextSt>{post?.text}</TextSt>
+        <TextSt>{postStore?.text}</TextSt>
         <CardFooter />
       </PostSt>
+      {isShowModalImage && (
+        <ModalTemplate onClose={() => dispatch(setIsShowModalImage(false))}>
+          <Image src={postStore?.image} alt="Image" />
+        </ModalTemplate>
+      )}
     </FormTemplate>
   );
 };
@@ -87,4 +98,10 @@ const TextSt = styled.div`
   font-size: 18px;
 
   padding-bottom: 15px;
+`;
+
+const Image = styled.img`
+  max-width: 800px;
+  max-height: 800px;
+  object-fit: cover;
 `;

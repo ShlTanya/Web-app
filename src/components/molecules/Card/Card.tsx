@@ -17,7 +17,7 @@ interface IPost {
 
 interface ICard {
   cardSize: 'small' | 'medium' | 'big';
-  post: IPost;
+  post: IPost | null;
 }
 
 interface ICardStyle {
@@ -68,11 +68,11 @@ export const Card = ({ cardSize, post }: ICard) => {
       return (
         <CardSt {...cardStyle}>
           <DivImgSt {...cardStyle}>
-            <ImgSt src={post.image} />
+            <ImgSt src={post?.image} />
           </DivImgSt>
-          <CardDate date={post.date} />
-          <Link to={`/posts/${post.id}`}>
-            <TitleSt {...cardStyle}>{post.title}</TitleSt>
+          <CardDate date={post?.date} />
+          <Link to={`/posts/${post?.id}`}>
+            <TitleSt {...cardStyle}>{post?.title}</TitleSt>
           </Link>
           <CardFooter />
         </CardSt>
@@ -83,14 +83,14 @@ export const Card = ({ cardSize, post }: ICard) => {
         <CardSt {...cardStyle}>
           <CardBlSt>
             <CardBl1LlSt {...cardStyle}>
-              <CardDate date={post.date} />
-              <Link to={`/posts/${post.id}`}>
-                <TitleSt {...cardStyle}>{post.title}</TitleSt>
+              <CardDate date={post?.date} />
+              <Link to={`/posts/${post?.id}`}>
+                <TitleSt {...cardStyle}>{post?.title}</TitleSt>
               </Link>
-              <TextSt>{post.text}</TextSt>
+              <TextSt>{post?.text}</TextSt>
             </CardBl1LlSt>
             <DivImgSt {...cardStyle}>
-              <ImgSt src={post.image} />
+              <ImgSt src={post?.image} />
             </DivImgSt>
           </CardBlSt>
           <CardFooter />
@@ -102,13 +102,13 @@ export const Card = ({ cardSize, post }: ICard) => {
         <CardSt {...cardStyle}>
           <CardBlSt>
             <CardBl1LlSt {...cardStyle}>
-              <CardDate date={post.date} />
-              <Link to={`/posts/${post.id}`}>
-                <TitleSt {...cardStyle}>{post.title}</TitleSt>
+              <CardDate date={post?.date} />
+              <Link to={`/posts/${post?.id}`}>
+                <TitleSt {...cardStyle}>{post?.title}</TitleSt>
               </Link>
             </CardBl1LlSt>
             <DivImgSt {...cardStyle}>
-              <ImgSt src={post.image} />
+              <ImgSt src={post?.image} />
             </DivImgSt>
           </CardBlSt>
           <CardFooter />

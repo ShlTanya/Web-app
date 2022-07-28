@@ -82,7 +82,7 @@ export const Button = ({ btnTheme, text, icon, disabled, onClick }: IBtn) => {
   return (
     <BtnSt onClick={onClick} disabled={disabled} {...btnStyle}>
       {icon}
-      {text}
+      <TextSt>{text}</TextSt>
     </BtnSt>
   );
 };
@@ -125,4 +125,9 @@ const BtnSt = styled.button<IBtnStyle>`
       fill: ${({ hovFontColor }) => hovFontColor};
     }
   }
+`;
+
+const TextSt = styled.div`
+  user-select: none;
+  margin-left: 10px;
 `;
