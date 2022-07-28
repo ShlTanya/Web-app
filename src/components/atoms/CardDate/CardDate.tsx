@@ -4,7 +4,7 @@ import { ColorService } from '../../../services/ColorService';
 import { getFontFamily } from '../../../services';
 
 interface ICarDate {
-  date: string;
+  date?: string;
 }
 
 export const CardDate = ({ date }: ICarDate) => <CardDateSt>{date}</CardDateSt>;
