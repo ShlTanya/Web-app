@@ -1,6 +1,6 @@
 export { Title } from './Title';
 export { ButtonMenuHamburger } from './ButtonMenuHamburger';
-export { Link } from './Link';
+export { LinkPr } from './Link';
 export { Button } from './Button';
 export { ButtonSearch } from './ButtonSearch';
 export { ButtonUserName } from './ButtonUser';

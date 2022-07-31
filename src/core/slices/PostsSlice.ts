@@ -5,6 +5,8 @@ import { IPostsInfo, IPost } from '../../types/Posts';
 interface IPostsState {
   posts: IPostsInfo | null;
   postCount: number;
+  pageCount: number;
+  selPageNo: number;
   isShowModalPost: boolean;
   isShowModalPostsImage: boolean;
   selectedPost: IPost | null;
@@ -13,6 +15,8 @@ interface IPostsState {
 const initialState: IPostsState = {
   posts: null,
   postCount: 19,
+  pageCount: 1,
+  selPageNo: 1,
   isShowModalPost: false,
   isShowModalPostsImage: false,
   selectedPost: null,
@@ -22,12 +26,19 @@ export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    addPosts: (state, action) => {
-      const posts = action.payload.results.map((post: IPost) => ({ ...post }));
-      state.posts = { ...action.payload, results: posts };
-    },
-    removePosts: (state) => {
-      state.posts = null;
+    setPosts: (state, action) => {
+      if (action) {
+        const posts = action.payload.results.map((post: IPost) => ({ ...post }));
+        state.posts = { ...action.payload, results: posts };
+        state.pageCount = state.posts?.count ? Math.ceil(state.posts?.count / state.postCount) : 0;
+      } else {
+        state.posts = null;
+        state.pageCount = 0;
+        state.selPageNo = 0;
+      }
+      /*    console.log('pageCount:' + state.pageCount);
+      console.log('selPageNo:' + state.selPageNo);
+      console.log(state.posts);*/
     },
     setIsShowModalPost: (state, action) => {
       state.isShowModalPost = action.payload;
@@ -41,29 +52,40 @@ export const postsSlice = createSlice({
     setPostCount: (state, action) => {
       state.postCount = action.payload;
     },
+    setSelPageNo: (state, action) => {
+      if (
+        action.payload > 0 &&
+        action.payload <= state.pageCount &&
+        action.payload <= state.pageCount
+      ) {
+        state.selPageNo = action.payload;
+      }
+    },
   },
 });
 
 export const getPostsAsync =
-  ({ postCount }: { postCount: number }) =>
+  ({ postCount, selPageNo }: { postCount: number; selPageNo: number }) =>
   async (dispatch: any) => {
     try {
       const response = await axios.get(
-        `https://studapi.teachmeskills.by/blog/posts/?limit=${postCount}`,
+        `https://studapi.teachmeskills.by/blog/posts/?limit=${postCount}&offset=${
+          (selPageNo - 1) * postCount
+        }`,
       );
-      dispatch(addPosts(response.data));
+      dispatch(setPosts(response.data));
     } catch (err: any) {
       throw new Error(err);
     }
   };
 
 export const {
-  addPosts,
-  removePosts,
+  setPosts,
   setIsShowModalPost,
   setIsShowModalPostsImage,
   setSelectedPost,
   setPostCount,
+  setSelPageNo,
 } = postsSlice.actions;
 export const showPosts = (state: { postsSl: IPostsState }) => state.postsSl.posts;
 export const getIsShowModalPost = (state: { postsSl: IPostsState }) =>
@@ -72,4 +94,6 @@ export const getIsShowModalPostsImage = (state: { postsSl: IPostsState }) =>
   state.postsSl.isShowModalPostsImage;
 export const getSelectedPost = (state: { postsSl: IPostsState }) => state.postsSl.selectedPost;
 export const getPostCount = (state: { postsSl: IPostsState }) => state.postsSl.postCount;
+export const getPageCount = (state: { postsSl: IPostsState }) => state.postsSl.pageCount;
+export const getSelPageNo = (state: { postsSl: IPostsState }) => state.postsSl.selPageNo;
 export default postsSlice.reducer;

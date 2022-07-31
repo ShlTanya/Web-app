@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { LinkPr } from '../../atoms/Link';
 
 import { Title } from '../../atoms/Title';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
@@ -38,7 +39,7 @@ export const PostPage = () => {
   return (
     <FormTemplate>
       <HomeSt>
-        <Link to={'/'}>Home</Link>
+        <LinkPr url="/" text="Home" />
         <PSt>|</PSt>
         <p>Post {postStore?.id}</p>
       </HomeSt>

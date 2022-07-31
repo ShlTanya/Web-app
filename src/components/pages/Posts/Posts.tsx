@@ -6,7 +6,6 @@ import { Tabs } from '../../atoms';
 import { Title } from '../../atoms/Title';
 import { Card } from '../../molecules/Card/Card';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
-import { ColorService } from '../../../services/ColorService';
 import {
   getPostsAsync,
   showPosts,
@@ -17,10 +16,14 @@ import {
   setSelectedPost,
   setIsShowModalPost,
   setIsShowModalPostsImage,
+  getSelPageNo,
+  setSelPageNo,
+  getPageCount,
 } from '../../../core/slices/PostsSlice';
 import { IPost } from '../../../types/Posts';
 import { ModalTemplate } from '../../templates/ModalTemplate/ModalTemplate';
-import { ButtonPrevNext } from '../../molecules/ButtonPrevNext/ButtonPrevNext';
+import { ButtonPrevNext } from '../../atoms/ButtonPrevNext/ButtonPrevNext';
+import { Paginator } from '../../molecules/Paginator/Paginator';
 
 export const PostsPage = () => {
   const postsStore = useSelector(showPosts);
@@ -28,11 +31,13 @@ export const PostsPage = () => {
   const isShowModalPostsImage = useSelector(getIsShowModalPostsImage);
   const selectedPost = useSelector(getSelectedPost);
   const postCount = useSelector(getPostCount);
+  const pageCount = useSelector(getPageCount);
+  const selPageNo = useSelector(getSelPageNo);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPostsAsync({ postCount }) as any);
-  }, [dispatch, postCount]);
+    dispatch(getPostsAsync({ postCount, selPageNo }) as any);
+  }, [dispatch, postCount, selPageNo]);
 
   const onShowModalPost = (post: IPost | null) => {
     dispatch(setSelectedPost(post));
@@ -84,6 +89,19 @@ export const PostsPage = () => {
             </CardSt>
           ))}
         </MainListSt>
+        <Paginator
+          pageCount={pageCount}
+          selPageNo={selPageNo}
+          onPageClick={(newPageNo: number) => {
+            dispatch(setSelPageNo(newPageNo));
+          }}
+          onPrevClick={() => {
+            dispatch(setSelPageNo(selPageNo - 1));
+          }}
+          onNextClick={() => {
+            dispatch(setSelPageNo(selPageNo + 1));
+          }}
+        />
       </PostsSt>
       {isShowModalPost && (
         <ModalTemplate onClose={() => dispatch(setIsShowModalPost(false))}>
@@ -123,7 +141,6 @@ const MainListSt = styled.div`
   justify-content: flex-start;
   align-content: start;
   flex-wrap: wrap;
-  border-bottom: 1px solid ${ColorService.MEDIUM};
 `;
 
 const CardSt = styled.div`
