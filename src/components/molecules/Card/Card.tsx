@@ -142,8 +142,9 @@ const CardBl1LlSt = styled.div<ICardStyle>`
 
 const DivImgSt = styled.div<ICardStyle>`
   width: ${({ imgWidth }) => imgWidth};
-  height: ${({ imgHeight }) => imgHeight};
-  padding-bottom: 24px;
+  min-height: ${({ imgHeight }) => imgHeight};
+  max-height: ${({ imgHeight }) => imgHeight};
+  margin-bottom: 24px;
 `;
 
 const TitleSt = styled.div<ICardStyle>`

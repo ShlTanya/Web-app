@@ -14,7 +14,7 @@ interface IPostsState {
 
 const initialState: IPostsState = {
   posts: null,
-  postCount: 19,
+  postCount: 0,
   pageCount: 1,
   selPageNo: 1,
   isShowModalPost: false,
@@ -28,6 +28,7 @@ export const postsSlice = createSlice({
   reducers: {
     setPosts: (state, action) => {
       if (action) {
+        if (state.postCount < 1) state.postCount = 2; // так возврщает API
         const posts = action.payload.results.map((post: IPost) => ({ ...post }));
         state.posts = { ...action.payload, results: posts };
         state.pageCount = state.posts?.count ? Math.ceil(state.posts?.count / state.postCount) : 0;
@@ -36,9 +37,6 @@ export const postsSlice = createSlice({
         state.pageCount = 0;
         state.selPageNo = 0;
       }
-      /*    console.log('pageCount:' + state.pageCount);
-      console.log('selPageNo:' + state.selPageNo);
-      console.log(state.posts);*/
     },
     setIsShowModalPost: (state, action) => {
       state.isShowModalPost = action.payload;
