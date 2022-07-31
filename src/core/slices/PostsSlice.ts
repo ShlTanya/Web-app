@@ -14,7 +14,7 @@ interface IPostsState {
 
 const initialState: IPostsState = {
   posts: null,
-  postCount: 0,
+  postCount: 19,
   pageCount: 1,
   selPageNo: 1,
   isShowModalPost: false,
