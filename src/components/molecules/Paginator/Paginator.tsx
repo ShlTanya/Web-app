@@ -34,7 +34,9 @@ export const Paginator = ({
           <PSt onClick={() => onPageClick(selPageNo + 1)}>{selPageNo + 1}</PSt>
         )}
         {selPageNo + 1 < pageCount - 1 && <PSt>...</PSt>}
-        {selPageNo != pageCount && <PSt onClick={() => onPageClick(pageCount)}>{pageCount}</PSt>}
+        {selPageNo != pageCount && pageCount > 0 && (
+          <PSt onClick={() => onPageClick(pageCount)}>{pageCount}</PSt>
+        )}
       </DivPagesSt>
       <ButtonPrevNext
         disabled={selPageNo ? selPageNo >= pageCount : false}
@@ -69,6 +71,7 @@ const PSt = styled.p`
     color: ${ColorService.PRIMARY};
     font-family: ${getFontFamily('bold')};
     cursor: pointer;
+  }
 `;
 
 const PSelSt = styled.p`

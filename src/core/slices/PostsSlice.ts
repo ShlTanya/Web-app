@@ -85,13 +85,17 @@ export const {
   setPostCount,
   setSelPageNo,
 } = postsSlice.actions;
-export const showPosts = (state: { postsSl: IPostsState }) => state.postsSl.posts;
+export const showPosts = (state: { postsSl: IPostsState }) => ({
+  posts: state.postsSl.posts,
+  pageCount: state.postsSl.pageCount,
+  selPageNo: state.postsSl.selPageNo,
+});
 export const getIsShowModalPost = (state: { postsSl: IPostsState }) =>
   state.postsSl.isShowModalPost;
 export const getIsShowModalPostsImage = (state: { postsSl: IPostsState }) =>
   state.postsSl.isShowModalPostsImage;
 export const getSelectedPost = (state: { postsSl: IPostsState }) => state.postsSl.selectedPost;
 export const getPostCount = (state: { postsSl: IPostsState }) => state.postsSl.postCount;
-export const getPageCount = (state: { postsSl: IPostsState }) => state.postsSl.pageCount;
-export const getSelPageNo = (state: { postsSl: IPostsState }) => state.postsSl.selPageNo;
+//export const getPageCount = (state: { postsSl: IPostsState }) => state.postsSl.pageCount;
+//export const getSelPageNo = (state: { postsSl: IPostsState }) => state.postsSl.selPageNo;
 export default postsSlice.reducer;
