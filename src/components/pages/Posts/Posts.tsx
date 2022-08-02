@@ -16,9 +16,7 @@ import {
   setSelectedPost,
   setIsShowModalPost,
   setIsShowModalPostsImage,
-  getSelPageNo,
   setSelPageNo,
-  getPageCount,
 } from '../../../core/slices/PostsSlice';
 import { IPost } from '../../../types/Posts';
 import { ModalTemplate } from '../../templates/ModalTemplate/ModalTemplate';
@@ -31,13 +29,14 @@ export const PostsPage = () => {
   const isShowModalPostsImage = useSelector(getIsShowModalPostsImage);
   const selectedPost = useSelector(getSelectedPost);
   const postCount = useSelector(getPostCount);
-  const pageCount = useSelector(getPageCount);
-  const selPageNo = useSelector(getSelPageNo);
+  //const pageCount = useSelector(getPageCount);
+  //const selPageNo = useSelector(getSelPageNo);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const selPageNo = postsStore?.selPageNo;
     dispatch(getPostsAsync({ postCount, selPageNo }) as any);
-  }, [dispatch, postCount, selPageNo]);
+  }, [dispatch, postCount, postsStore?.selPageNo]);
 
   const onShowModalPost = (post: IPost | null) => {
     dispatch(setSelectedPost(post));
@@ -51,20 +50,20 @@ export const PostsPage = () => {
 
   const setNextPost = () => {
     if (selectedPost) {
-      let lastIndex = postsStore?.results.indexOf(selectedPost);
+      let lastIndex = postsStore?.posts?.results.indexOf(selectedPost);
       if (!lastIndex) lastIndex = 0;
       if (lastIndex < postCount) {
-        dispatch(setSelectedPost(postsStore?.results?.at(lastIndex + 1)));
+        dispatch(setSelectedPost(postsStore?.posts?.results?.at(lastIndex + 1)));
       }
     }
   };
 
   const setPrevPost = () => {
     if (selectedPost) {
-      let lastIndex = postsStore?.results.indexOf(selectedPost);
+      let lastIndex = postsStore?.posts?.results.indexOf(selectedPost);
       if (!lastIndex) lastIndex = 0;
       if (lastIndex > 0) {
-        dispatch(setSelectedPost(postsStore?.results?.at(lastIndex - 1)));
+        dispatch(setSelectedPost(postsStore?.posts?.results?.at(lastIndex - 1)));
       }
     }
   };
@@ -80,7 +79,7 @@ export const PostsPage = () => {
       <Tabs list={tabs} activeTabUrl={'/all'}></Tabs>
       <PostsSt>
         <MainListSt>
-          {postsStore?.results?.map((post, index) => (
+          {postsStore?.posts?.results?.map((post, index) => (
             <CardSt
               key={post.id}
               onBlur={() => onShowModalPost(post)}
@@ -90,16 +89,16 @@ export const PostsPage = () => {
           ))}
         </MainListSt>
         <Paginator
-          pageCount={pageCount}
-          selPageNo={selPageNo}
+          pageCount={postsStore.pageCount}
+          selPageNo={postsStore.selPageNo}
           onPageClick={(newPageNo: number) => {
             dispatch(setSelPageNo(newPageNo));
           }}
           onPrevClick={() => {
-            dispatch(setSelPageNo(selPageNo - 1));
+            dispatch(setSelPageNo(postsStore.selPageNo - 1));
           }}
           onNextClick={() => {
-            dispatch(setSelPageNo(selPageNo + 1));
+            dispatch(setSelPageNo(postsStore.selPageNo + 1));
           }}
         />
       </PostsSt>
@@ -114,12 +113,16 @@ export const PostsPage = () => {
             {selectedPost?.image && <Image src={selectedPost?.image} alt="Image" />}
             <ModalDivButtonSt>
               <ButtonPrevNext
-                disabled={selectedPost ? 0 == postsStore?.results.indexOf(selectedPost) : false}
+                disabled={
+                  selectedPost ? 0 == postsStore?.posts?.results.indexOf(selectedPost) : false
+                }
                 btnType="Prev"
                 onClick={() => setPrevPost()}></ButtonPrevNext>
               <ButtonPrevNext
                 disabled={
-                  selectedPost ? postCount - 1 == postsStore?.results.indexOf(selectedPost) : false
+                  selectedPost
+                    ? postCount - 1 == postsStore?.posts?.results.indexOf(selectedPost)
+                    : false
                 }
                 btnType="Next"
                 onClick={() => setNextPost()}></ButtonPrevNext>
