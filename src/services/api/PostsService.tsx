@@ -2,7 +2,7 @@ import { GuestService } from './GuestService';
 
 class PostsAPIService extends GuestService {
   public async getPosts(postCount: number, selPageNo: number) {
-    return this.get(`?limit=${postCount}&offset=${(selPageNo - 1) * postCount}`);
+    return await this.get(`?limit=${postCount}&offset=${(selPageNo - 1) * postCount}`);
   }
 
   public async getPost(id: number) {

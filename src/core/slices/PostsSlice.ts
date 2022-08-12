@@ -33,7 +33,7 @@ export const postsSlice = createSlice({
     setPosts: (state, action) => {
       if (action && action.payload) {
         if (state.postCount < 1) state.postCount = 2; // так возврщает API
-        const posts = action.payload.map((post: IPost) => ({ ...post }));
+        const posts = action.payload.results.map((post: IPost) => ({ ...post }));
         state.posts = { ...action.payload, results: posts };
         state.pageCount = state.posts?.count ? Math.ceil(state.posts?.count / state.postCount) : 0;
         console.log('setPosts');
@@ -66,22 +66,7 @@ export const postsSlice = createSlice({
     },
   },
 });
-/*
-export const getPostsAsync =
-  ({ postCount, selPageNo }: { postCount: number; selPageNo: number }) =>
-  async (dispatch: any) => {
-    try {
-      const response = await axios.get(
-        `https://studapi.teachmeskills.by/blog/posts/?limit=${postCount}&offset=${
-          (selPageNo - 1) * postCount
-        }`,
-      );
-      dispatch(setPosts(response.data));
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
-*/
+
 export const {
   setPosts,
   setIsShowModalPost,

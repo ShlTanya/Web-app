@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import { IPost } from '../../types/Posts';
+import { actions } from '../Constants';
 
 interface IPostState {
   post: IPost | null;
@@ -12,11 +12,13 @@ const initialState: IPostState = {
   isShowModalImage: false,
 };
 
+export const getPostsAction = createAction<{ id: number }>(actions.GET_POST);
+
 export const postSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
-    addPost: (state, action) => {
+    setPost: (state, action) => {
       state.post = action.payload;
     },
     removePost: (state) => {
@@ -28,21 +30,7 @@ export const postSlice = createSlice({
   },
 });
 
-export const getPostAsync =
-  ({ postid }: { postid: string }) =>
-  async (dispatch: any) => {
-    try {
-      if (postid !== null) {
-        const response = await axios.get(`https://studapi.teachmeskills.by/blog/posts/${postid}`);
-        const post = response.data;
-        dispatch(addPost(post));
-      } else dispatch(removePost());
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
-
-export const { addPost, removePost, setIsShowModalImage } = postSlice.actions;
+export const { setPost, removePost, setIsShowModalImage } = postSlice.actions;
 export const showPost = (state: { postSl: IPostState }) => state.postSl.post;
 export const getIsShowModalImage = (state: { postSl: IPostState }) => state.postSl.isShowModalImage;
 export default postSlice.reducer;

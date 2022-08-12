@@ -2,20 +2,26 @@ import { call, takeEvery, put } from 'redux-saga/effects';
 import { PostsService } from '../../services/api/PostsService';
 import { actions } from '../Constants';
 import { setPosts } from '../../core/slices/PostsSlice';
-import { IPostsInfo } from '../../types/Posts';
+import { setPost } from '../../core/slices/PostSlice';
+import { IPostsInfo, IPost } from '../../types/Posts';
 
 function* getPostsSaga({ payload }: any) {
   try {
-    console.log(`payload: ${payload}`);
-    const results: { data: IPostsInfo } = yield call(() => {
-      PostsService.getPosts(payload.postCount, payload.selPageNo);
-    });
-    console.log(`res: ${results}`);
-
-    const posts = results?.data as IPostsInfo;
-
-    console.log(`posts: ${posts}`);
+    const res: { data: IPostsInfo } = yield call(() =>
+      PostsService.getPosts(payload.postCount, payload.selPageNo),
+    );
+    const posts = res?.data as IPostsInfo;
     yield put(setPosts(posts));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* getPostSaga({ payload }: any) {
+  try {
+    const res: { data: IPost } = yield call(() => PostsService.getPost(payload.id));
+    const posts = res?.data as IPost;
+    yield put(setPost(posts));
   } catch (e) {
     console.log(e);
   }
@@ -23,4 +29,5 @@ function* getPostsSaga({ payload }: any) {
 
 export function* postsSaga() {
   yield takeEvery(actions.GET_POSTS, getPostsSaga);
+  yield takeEvery(actions.GET_POST, getPostSaga);
 }

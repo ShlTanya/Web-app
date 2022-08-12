@@ -11,8 +11,8 @@ import { getFontFamily } from '../../../services';
 import styled from 'styled-components';
 import { CardFooter } from '../../molecules/CardFooter';
 import {
+  getPostsAction,
   getIsShowModalImage,
-  getPostAsync,
   setIsShowModalImage,
   showPost,
 } from '../../../core/slices/PostSlice';
@@ -30,9 +30,9 @@ export const PostPage = () => {
   };
 
   useEffect(() => {
-    const postid = params?.postID;
-    if (postid) {
-      dispatch(getPostAsync({ postid }) as any);
+    const id = params?.postID as unknown as number;
+    if (id) {
+      dispatch(getPostsAction({ id }) as any);
     }
   }, [dispatch, params?.postID]);
 

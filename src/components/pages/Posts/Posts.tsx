@@ -34,7 +34,6 @@ export const PostsPage = () => {
   useEffect(() => {
     const selPageNo = postsStore?.selPageNo;
     dispatch(getPostsAction({ postCount, selPageNo }) as any);
-    console.log('useEffect');
   }, [dispatch, postCount, postsStore?.selPageNo]);
 
   const onShowModalPost = (post: IPost | null) => {
