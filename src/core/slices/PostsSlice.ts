@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import { IPostsInfo, IPost } from '../../types/Posts';
+import { actions } from '../Constants';
 
 interface IPostsState {
   posts: IPostsInfo | null;
@@ -22,6 +22,8 @@ const initialState: IPostsState = {
   selectedPost: null,
 };
 
+export const getPostsAction = createAction(actions.GET_POSTS);
+
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -29,9 +31,14 @@ export const postsSlice = createSlice({
     setPosts: (state, action) => {
       if (action) {
         if (state.postCount < 1) state.postCount = 2; // так возврщает API
-        const posts = action.payload.results.map((post: IPost) => ({ ...post }));
-        state.posts = { ...action.payload, results: posts };
-        state.pageCount = state.posts?.count ? Math.ceil(state.posts?.count / state.postCount) : 0;
+        if (action.payload) {
+          const posts = action.payload.map((post: IPost) => ({ ...post }));
+          state.posts = { ...action.payload, results: posts };
+          state.pageCount = state.posts?.count
+            ? Math.ceil(state.posts?.count / state.postCount)
+            : 0;
+        }
+        console.log('setPosts');
       } else {
         state.posts = null;
         state.pageCount = 0;
@@ -61,7 +68,7 @@ export const postsSlice = createSlice({
     },
   },
 });
-
+/*
 export const getPostsAsync =
   ({ postCount, selPageNo }: { postCount: number; selPageNo: number }) =>
   async (dispatch: any) => {
@@ -76,7 +83,7 @@ export const getPostsAsync =
       throw new Error(err);
     }
   };
-
+*/
 export const {
   setPosts,
   setIsShowModalPost,
@@ -96,6 +103,5 @@ export const getIsShowModalPostsImage = (state: { postsSl: IPostsState }) =>
   state.postsSl.isShowModalPostsImage;
 export const getSelectedPost = (state: { postsSl: IPostsState }) => state.postsSl.selectedPost;
 export const getPostCount = (state: { postsSl: IPostsState }) => state.postsSl.postCount;
-//export const getPageCount = (state: { postsSl: IPostsState }) => state.postsSl.pageCount;
-//export const getSelPageNo = (state: { postsSl: IPostsState }) => state.postsSl.selPageNo;
+
 export default postsSlice.reducer;

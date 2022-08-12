@@ -5,6 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './core/Store';
+import { PostsService } from './services/api/PostsService';
+
+PostsService.setCredentials({
+  URL: 'https://studapi.teachmeskills.by',
+});
+PostsService.prefix = 'blog/posts';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

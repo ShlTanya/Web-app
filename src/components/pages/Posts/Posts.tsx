@@ -7,7 +7,7 @@ import { Title } from '../../atoms/Title';
 import { Card } from '../../molecules/Card/Card';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
 import {
-  getPostsAsync,
+  getPostsAction,
   showPosts,
   getIsShowModalPost,
   getIsShowModalPostsImage,
@@ -34,8 +34,9 @@ export const PostsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const selPageNo = postsStore?.selPageNo;
-    dispatch(getPostsAsync({ postCount, selPageNo }) as any);
+    //const selPageNo = postsStore?.selPageNo;
+    dispatch(getPostsAction() as any);
+    console.log('useEffect');
   }, [dispatch, postCount, postsStore?.selPageNo]);
 
   const onShowModalPost = (post: IPost | null) => {
