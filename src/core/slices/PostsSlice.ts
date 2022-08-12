@@ -16,13 +16,15 @@ const initialState: IPostsState = {
   posts: null,
   postCount: 19,
   pageCount: 1,
-  selPageNo: 1,
+  selPageNo: 3,
   isShowModalPost: false,
   isShowModalPostsImage: false,
   selectedPost: null,
 };
 
-export const getPostsAction = createAction(actions.GET_POSTS);
+export const getPostsAction = createAction<{ postCount: number; selPageNo: number }>(
+  actions.GET_POSTS,
+);
 
 export const postsSlice = createSlice({
   name: 'posts',

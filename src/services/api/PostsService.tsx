@@ -1,16 +1,16 @@
 import { GuestService } from './GuestService';
 
 class PostsAPIService extends GuestService {
-  public async getPosts() {
-    return this.get('');
+  public async getPosts(postCount: number, selPageNo: number) {
+    return this.get(`?limit=${postCount}&offset=${(selPageNo - 1) * postCount}`);
   }
 
   public async getPost(id: number) {
-    return this.get(`posts/${id}`);
+    return this.get(`${id}`);
   }
 
   public async deletePost(id: number) {
-    return this.remove(`posts/${id}`);
+    return this.remove(`${id}`);
   }
 }
 

@@ -29,13 +29,11 @@ export const PostsPage = () => {
   const isShowModalPostsImage = useSelector(getIsShowModalPostsImage);
   const selectedPost = useSelector(getSelectedPost);
   const postCount = useSelector(getPostCount);
-  //const pageCount = useSelector(getPageCount);
-  //const selPageNo = useSelector(getSelPageNo);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //const selPageNo = postsStore?.selPageNo;
-    dispatch(getPostsAction() as any);
+    const selPageNo = postsStore?.selPageNo;
+    dispatch(getPostsAction({ postCount, selPageNo }) as any);
     console.log('useEffect');
   }, [dispatch, postCount, postsStore?.selPageNo]);
 

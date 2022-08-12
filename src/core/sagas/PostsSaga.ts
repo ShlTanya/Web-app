@@ -7,11 +7,12 @@ import { IPostsInfo } from '../../types/Posts';
 function* getPostsSaga({ payload }: any) {
   try {
     console.log(`payload: ${payload}`);
-    let res: { data: IPostsInfo } = yield call(() => {
-      PostsService.getPosts();
+    const results: { data: IPostsInfo } = yield call(() => {
+      PostsService.getPosts(payload.postCount, payload.selPageNo);
     });
+    console.log(`res: ${results}`);
 
-    const posts = res?.data as IPostsInfo;
+    const posts = results?.data as IPostsInfo;
 
     console.log(`posts: ${posts}`);
     yield put(setPosts(posts));
